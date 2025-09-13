@@ -25,10 +25,10 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+      run: dotnet restore ${{ env.PROJECT_NAME }}.csproj
 
     - name: Build
-      run: dotnet build ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --no-restore
+      run: dotnet build ${{ env.PROJECT_NAME }}.csproj --no-restore
 
     - name: Run tests
       run: dotnet test --no-build --verbosity normal
