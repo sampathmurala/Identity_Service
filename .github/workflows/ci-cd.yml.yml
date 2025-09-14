@@ -26,11 +26,11 @@ jobs:
 
     - name: Restore dependencies
       # The path is now relative to the repository root.
-      run: dotnet restore ${{ env.PROJECT_PATH }}/${{ env.PROJECT_PATH }}.csproj
+      run: dotnet restore ${{ env.PROJECT_PATH }}.csproj
 
     - name: Build
       # The path is now relative to the repository root.
-      run: dotnet build ${{ env.PROJECT_PATH }}/${{ env.PROJECT_PATH }}.csproj --no-restore
+      run: dotnet build ${{ env.PROJECT_PATH }}.csproj --no-restore
 
     - name: Run tests
       # The path is now relative to the repository root.
@@ -47,6 +47,6 @@ jobs:
       with:
        # The 'context' is the path to the folder containing the Dockerfile.
        # It is now correctly pointing to the Identity.Api folder.
-        context: ${{ env.PROJECT_PATH }}
+        context: .
         push: true
         tags: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
