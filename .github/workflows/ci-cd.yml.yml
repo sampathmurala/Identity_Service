@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_NAME: Identity.Api
+  PROJECT_PATH: Identity.Api
   DOCKERHUB_USERNAME: samlearning1709
   IMAGE_NAME: identity-api
 
@@ -25,12 +25,15 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore ${{ env.PROJECT_NAME }}.csproj
+      # The path is now relative to the repository root.
+      run: dotnet restore ${{ env.PROJECT_PATH }}/${{ env.PROJECT_PATH }}.csproj
 
     - name: Build
-      run: dotnet build ${{ env.PROJECT_NAME }}.csproj --no-restore
+      # The path is now relative to the repository root.
+      run: dotnet build ${{ env.PROJECT_PATH }}/${{ env.PROJECT_PATH }}.csproj --no-restore
 
     - name: Run tests
+      # The path is now relative to the repository root.
       run: dotnet test --no-build --verbosity normal
 
     - name: Log in to Docker Hub
@@ -42,6 +45,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ${{ env.PROJECT_NAME }}
+       # The 'context' is the path to the folder containing the Dockerfile.
+       # It is now correctly pointing to the Identity.Api folder.
+        context: ${{ env.PROJECT_PATH }}
         push: true
         tags: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
